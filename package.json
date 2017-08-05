@@ -1,0 +1,21 @@
+{
+  "name": "exchange-rates-charts",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "engines": {
+    "node": "8.2.1"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && yarn --production=false && yarn run build"
+  },
+  "dependencies": {
+    "axios": "^0.16.2",
+    "express": "^4.15.3",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
