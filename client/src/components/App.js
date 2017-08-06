@@ -7,7 +7,7 @@ class App extends Component {
 
     this.state = {
       data: {},
-      error: ''
+      error: '' 
     };
   }
 
@@ -18,7 +18,6 @@ class App extends Component {
       this.setState({ data });
     });
     socket.on('currData', rates => {
-      const { data } = this.state;
       this.setState({
         data: rates
       });
@@ -28,7 +27,18 @@ class App extends Component {
 
   addCode = (code) => {
     console.log(code);
-    this.socket.emit('addCurr', code);
+    const { data } = this.state;
+    if (code in data) {
+      console.log('data is already in state');
+      return;
+    } else {
+      this.socket.emit('addCurr', code);
+    }
+  }
+
+  deleteCode = code => {
+    console.log('delete', code);
+    this.socket.emit('deleteCode', code);
   }
 
   render() {
@@ -40,6 +50,14 @@ class App extends Component {
         {
           this.state.error
         }
+        <ol>
+          {
+            Object.keys(this.state.data).map((el, i) => {
+              let { code, currency, rates } = this.state.data[el];
+              return <li key={i}>{code} {currency} {Number(rates[rates.length - 1].mid).toFixed(2)}PLN {rates[rates.length - 1].effectiveDate} <span onClick={() => this.deleteCode(code)}>&#x2717;</span></li>
+            })
+          }
+        </ol>  
       </div>
     );
   }

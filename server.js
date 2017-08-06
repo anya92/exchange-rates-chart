@@ -26,6 +26,7 @@ const getDataEveryDay = async (code) => {
   try {
     const url = getURL(code);
     const rates = await axios.get(url);
+    initialData = {};
     initialData[code] = rates.data;
     initialData[code].id = Math.round(Math.random() * 1000);
     io.emit('currData', initialData);
@@ -35,9 +36,17 @@ const getDataEveryDay = async (code) => {
 }
 
 io.on('connection', socket => {
+  io.emit('initialData', initialData);
   socket.on('addCurr', code => {
     getRatesData(socket, code);
   });
+  socket.on('deleteCode', code => {
+    console.log('initialData', initialData);
+    console.log('delete', code);
+    delete initialData[code];
+    console.log('initialData', initialData);
+    io.emit('initialData', initialData);
+  })
 });
 
 const getRatesData = async (socket, code) => {
@@ -56,14 +65,15 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build/index.html'));
 });
 
-new CronJob('00 00 09 * * *', function() {
+new CronJob('00 11 13 * * *', function() {
   // Runs every day at 9:00:00
   console.log('Get new data at 9:00');
-  initialData = {};
   getDataEveryDay('EUR');
 }, null, true, 'Europe/Warsaw');
 
 
 server.listen(port, () => {
   console.log(`Server listening on ${port}`);
+  getDataEveryDay('EUR');
+  io.emit('initialData', initialData);
 });

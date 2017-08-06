@@ -3,8 +3,28 @@
   "name": "💸 Kursy walut 💸",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "192x192",
+      "src": "money32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+     {
+      "src": "money64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+     {
+      "src": "money128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+     {
+      "src": "money256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+     {
+      "src": "money512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
