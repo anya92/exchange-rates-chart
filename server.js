@@ -41,10 +41,8 @@ io.on('connection', socket => {
     getRatesData(socket, code);
   });
   socket.on('deleteCode', code => {
-    console.log('initialData', initialData);
-    console.log('delete', code);
     delete initialData[code];
-    console.log('initialData', initialData);
+    console.log(initialData[code]);
     io.emit('initialData', initialData);
   })
 });

@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import socketIoClient from 'socket.io-client';
+import moment from 'moment';
 
 import Chart from './Chart';
+
+require('moment/locale/pl');
+moment.locale('pl');
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
+      code: '',
       data: null,
-      error: '' 
+      error: '',
+      displayChart: 'month' 
     };
   }
 
@@ -27,14 +33,15 @@ class App extends Component {
     socket.on('errorMessage', error => this.setState({ error }));
   }
 
-  addCode = (code) => {
-    console.log(code);
-    const { data } = this.state;
+  addCode = e => {
+    e.preventDefault();
+    const { code, data } = this.state;
+    if (code === '') return;
     if (code in data) {
       console.log('data is already in state');
       return;
     } else {
-      this.socket.emit('addCurr', code);
+      this.socket.emit('addCurr', code.toUpperCase());
     }
   }
 
@@ -47,9 +54,9 @@ class App extends Component {
     return (
       <div>
         <h1>Kursy walut.</h1>
-        <form onSubmit={() => this.addCode('EUR')}>
+        <form onSubmit={e => this.addCode(e)}>
           <label htmlFor="code">Kod waluty (np. USD, CHF)</label>
-          <input type="text" onChange={e => this.setState({ code: e.target.value })} name="code" />
+          <input type="text" onChange={e => this.setState({ code: e.target.value })} name="code" style={{textTransform: "uppercase"}}  />
           <button type="submit">Dodaj</button>
           
         </form>
@@ -65,13 +72,17 @@ class App extends Component {
                   let { code, currency, rates } = this.state.data[el];
                   let labels = [], data = [];
                   rates.forEach(rate => {
-                    labels.push(rate.effectiveDate);
+                    labels.push(moment(rate.effectiveDate).format('DD MMM'));
                     data.push(rate.mid);
                   });
+                  let monthLabels = labels.slice(-21); // dwa rodzaje wykresów: rok / miesiąc
+                  let monthData = data.slice(-21); // a to przenieśc do chart
                   return (
                     <div key={i}>
                       <li>{code} {currency} {Number(rates[rates.length - 1].mid).toFixed(2)}PLN {rates[rates.length - 1].effectiveDate} <span onClick={() => this.deleteCode(code)}>&#x2717;</span></li>
-                      <Chart code={code} labels={labels} data={data} /> 
+                        <div onClick={() => this.setState({ displayChart: 'month' })}>1M</div>
+                        <div onClick={() => this.setState({ displayChart: 'year' })}>1R</div>
+                        <Chart code={code} labels={this.state.displayChart === 'month' ? monthLabels : labels} data={this.state.displayChart === 'month' ? monthData : data} points={this.state.displayChart === 'month'} /> 
                     </div>  
                   )
                 })

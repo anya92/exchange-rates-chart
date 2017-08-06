@@ -1,0 +1,12 @@
+@import '../../node_modules/normalize.css/normalize';
+
+body {
+  color: #333;
+}
+
+canvas {
+  background-color: #309187;
+  padding: 20px 15px 0 15px;
+  max-width: 500px;
+  max-height: 400px;
+}
