@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import socketIoClient from 'socket.io-client';
 
+import Chart from './Chart';
+
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      data: {},
+      data: null,
       error: '' 
     };
   }
@@ -45,17 +47,36 @@ class App extends Component {
     return (
       <div>
         <h1>Kursy walut.</h1>
-        <button onClick={() => this.addCode('EUR')}>Dodaj</button>
+        <form onSubmit={() => this.addCode('EUR')}>
+          <label htmlFor="code">Kod waluty (np. USD, CHF)</label>
+          <input type="text" onChange={e => this.setState({ code: e.target.value })} name="code" />
+          <button type="submit">Dodaj</button>
+          
+        </form>
         
         {
           this.state.error
         }
         <ol>
           {
-            Object.keys(this.state.data).map((el, i) => {
-              let { code, currency, rates } = this.state.data[el];
-              return <li key={i}>{code} {currency} {Number(rates[rates.length - 1].mid).toFixed(2)}PLN {rates[rates.length - 1].effectiveDate} <span onClick={() => this.deleteCode(code)}>&#x2717;</span></li>
-            })
+            this.state.data
+            ? (
+                Object.keys(this.state.data).map((el, i) => {
+                  let { code, currency, rates } = this.state.data[el];
+                  let labels = [], data = [];
+                  rates.forEach(rate => {
+                    labels.push(rate.effectiveDate);
+                    data.push(rate.mid);
+                  });
+                  return (
+                    <div key={i}>
+                      <li>{code} {currency} {Number(rates[rates.length - 1].mid).toFixed(2)}PLN {rates[rates.length - 1].effectiveDate} <span onClick={() => this.deleteCode(code)}>&#x2717;</span></li>
+                      <Chart code={code} labels={labels} data={data} /> 
+                    </div>  
+                  )
+                })
+              )
+            : <div></div>
           }
         </ol>  
       </div>
