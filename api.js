@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const getURL = code => {
-  const baseUrl = 'http://api.nbp.pl/api/exchangerates/rates/a';
+  const baseUrl = 'https://api.nbp.pl/api/exchangerates/rates/a';
 
   const date = new Date();
   const year = date.getFullYear();

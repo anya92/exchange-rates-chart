@@ -1,5 +1,5 @@
 const express = require('express');
-const http = require('http');
+const https = require('https');
 const path = require('path');
 const socketIo = require('socket.io');
 const axios = require('axios');
@@ -12,7 +12,7 @@ const port = process.env.PORT || 8080;
 // serve static files from the react app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-const server = http.createServer(app);
+const server = https.createServer(app);
 const io = socketIo(server);
 
 io.on('connection', socket => {
