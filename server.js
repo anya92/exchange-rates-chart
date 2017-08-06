@@ -3,7 +3,7 @@ const http = require('http');
 const path = require('path');
 const socketIo = require('socket.io');
 const axios = require('axios');
-const CronJob = require('cron').CronJob;
+// const CronJob = require('cron').CronJob;
 const getURL = require('./api');
 
 const app = express();
@@ -65,11 +65,11 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build/index.html'));
 });
 
-new CronJob('00 11 13 * * *', function() {
-  // Runs every day at 9:00:00
-  console.log('Get new data at 9:00');
-  getDataEveryDay('EUR');
-}, null, true, 'Europe/Warsaw');
+// new CronJob('00 11 13 * * *', function() {
+//   // Runs every day at 9:00:00
+//   console.log('Get new data at 9:00');
+//   getDataEveryDay('EUR');
+// }, null, true, 'Europe/Warsaw');
 
 
 server.listen(port, () => {
