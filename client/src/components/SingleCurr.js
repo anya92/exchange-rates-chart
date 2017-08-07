@@ -18,6 +18,7 @@ class SingleCurr extends Component {
   render() {
     const { currency, code, rates, deleteCode } = this.props;
     const lastRate = rates[rates.length - 2].mid;
+    const date = rates[rates.length - 2].effectiveDate;
     let labels = [], data = [];
     rates.forEach(rate => {
       labels.push(moment(rate.effectiveDate).format('DD MMM'));
@@ -33,6 +34,14 @@ class SingleCurr extends Component {
           <p className="currencyCard__header__delete" onClick={() => deleteCode(code)}>&#10005;</p>
         </div>
         <div className="currencyCard__chart">
+        <div className="currencyCard__chart__date">
+          <p>{date}</p>
+        </div>
+          <div className="currencyCard__chart__choose">
+            <p>miesiąc</p>
+            <p>pół roku</p>
+            <p className="active">rok</p>
+          </div>
           <Chart code={code} labels={labels} data={data} />
         </div>
       </div>

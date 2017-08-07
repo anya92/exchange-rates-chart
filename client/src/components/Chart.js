@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 
+
 class Chart extends Component {
   render() {
     const { labels, code, data } = this.props;
@@ -44,8 +45,9 @@ class Chart extends Component {
           },
           ticks: {
             fontColor: 'white',
-            maxTicksLimit: 6,
-            stepSize: 0.5
+            fontFamily: 'Saira Extra Condensed',
+            maxTicksLimit: 10,
+            // stepSize: 0.5
           }
         }],
         yAxes: [{
@@ -55,6 +57,8 @@ class Chart extends Component {
           },
           ticks: {
             fontColor: 'white',
+            fontFamily: 'Saira Extra Condensed',
+            fontSize: 14,
             maxTicksLimit: 4
           }
         }]

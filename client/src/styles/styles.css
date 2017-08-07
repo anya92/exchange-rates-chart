@@ -447,8 +447,29 @@ template {
 .currencyCard__chart {
   padding: 5px; }
 
-.currencyCard__chart canvas {
-  padding-top: 20px; }
+.currencyCard__chart__date {
+  font-size: 1.2rem;
+  color: #3241c2;
+  display: inline-block; }
+
+.currencyCard__chart__choose {
+  float: right;
+  text-align: right;
+  display: inline-block; }
+
+.currencyCard__chart__choose p {
+  display: inline-block;
+  opacity: 0.5;
+  font-size: 1.2rem;
+  margin-left: 5px;
+  cursor: pointer; }
+
+.currencyCard__chart__choose p.active {
+  opacity: 1; }
+
+.currencyCard__chart__choose p:not(:last-child):after {
+  content: '|';
+  margin: 5px; }
 
 body {
   color: #fff;
