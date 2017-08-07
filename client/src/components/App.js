@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import socketIoClient from 'socket.io-client';
 import moment from 'moment';
 
+import SingleCurr from './SingleCurr';
 import Chart from './Chart';
 
 require('moment/locale/pl');
@@ -55,39 +56,45 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Kursy walut.</h1>
-        <form onSubmit={e => this.addCode(e)}>
-          <label htmlFor="code">Kod waluty (np. USD, CHF)</label>
-          <input type="text" onChange={e => this.setState({ code: e.target.value })} name="code" style={{textTransform: "uppercase"}}  />
-          <button type="submit">Dodaj</button>
-          
-        </form>
+      <div className="container">
+        <div className="title">
+          <h1>Kursy walut</h1>
+        </div>
+        <div className="form">
+          <form onSubmit={e => this.addCode(e)}>
+            <label htmlFor="code">Kod waluty (np. USD, CHF)</label><br/>
+            <input type="text" onChange={e => this.setState({ code: e.target.value })} name="code" style={{textTransform: "uppercase"}}  />
+            <button type="submit">Dodaj</button>
+          </form>
+        </div>
         
         {
           this.state.error
         }
-        <ol>
           {
             this.state.data
             ? (
                 Object.keys(this.state.data).map((el, i) => {
                   let { code, currency, rates } = this.state.data[el];
-                  let labels = [], data = [];
-                  rates.forEach(rate => {
-                    labels.push(moment(rate.effectiveDate).format('DD MMM'));
-                    data.push(rate.mid);
-                  });
-                  let monthLabels = labels.slice(-21); // dwa rodzaje wykresów: rok / miesiąc
-                  let monthData = data.slice(-21); // a to przenieśc do chart
+                  
                   return (
-                    <div key={i}>
-                      <li>{code} {currency} {Number(rates[rates.length - 1].mid).toFixed(4)}PLN {rates[rates.length - 1].effectiveDate} <span onClick={() => this.deleteCode(code)}>&#x2717;</span></li>
-                        <div onClick={() => this.setState({ displayChart: 'month' })}>1M</div>
-                        <div onClick={() => this.setState({ displayChart: 'year' })}>1R</div>
-                        <Chart code={code} labels={this.state.displayChart === 'month' ? monthLabels : labels} data={this.state.displayChart === 'month' ? monthData : data} points={this.state.displayChart === 'month'} /> 
-                    </div>  
+                    <SingleCurr key={i} currency={currency} code={code} rates={rates} deleteCode={this.deleteCode}/>
                   )
+                  // rates.forEach(rate => {
+                  //   labels.push(moment(rate.effectiveDate).format('DD MMM'));
+                  //   data.push(rate.mid);
+                  // });
+                  // let monthLabels = labels.slice(-(labels.length / 12)); // dwa rodzaje wykresów: rok / miesiąc
+                  // let monthData = data.slice(-(data.length / 12)); // a to przenieśc do chart
+                  // console.log(-(labels.length / 12));
+                  // return (
+                  //   <div key={i}>
+                  //     <li>{code} {currency} {Number(rates[rates.length - 1].mid).toFixed(4)}PLN {rates[rates.length - 1].effectiveDate} <span onClick={() => this.deleteCode(code)}>&#x2717;</span></li>
+                  //       <div onClick={() => this.setState({ displayChart: 'month' })}>1M</div>
+                  //       <div onClick={() => this.setState({ displayChart: 'year' })}>1R</div>
+                  //       <Chart code={code} labels={this.state.displayChart === 'month' ? monthLabels : labels} data={this.state.displayChart === 'month' ? monthData : data} points={this.state.displayChart === 'month'} /> 
+                  //   </div>  
+                  // )
                 })
               )
             : <div></div>
@@ -96,7 +103,6 @@ class App extends Component {
             ? <div>Loading...</div>
             : <div></div>
           }
-        </ol>  
       </div>
     );
   }

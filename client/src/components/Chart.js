@@ -2,21 +2,12 @@ import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 
 class Chart extends Component {
-  componentWillMount() {
-      
-  }
-
   render() {
-    const { labels, code, data, points } = this.props;
+    const { labels, code, data } = this.props;
     const ratesData = (canvas) => {
       const gradient = canvas.getContext('2d').createLinearGradient(500, 0, 100, 0);
-      // gradient.addColorStop(0, 'rgba(48, 104, 161, 1)');
-      // gradient.addColorStop(0.5, 'rgba(48, 104, 161, 0.5)');
-      // gradient.addColorStop(1, 'rgba(48, 104, 161, 0.25)');
-      gradient.addColorStop(0, "#1d2671");
-      gradient.addColorStop(1, "#c33764");
-       // gradient.addColorStop(0, "#89253e");
-      // gradient.addColorStop(1, "#3a6186");
+      gradient.addColorStop(0, "#c33764");
+      gradient.addColorStop(1, "#1d2671");
       return {
         labels,
         datasets: [
@@ -31,10 +22,8 @@ class Chart extends Component {
         ]
       };
     };
-    const radius = points ? 3 : 0; 
     const options = {
       responsive: true, 
-      // maintainAspectRatio: false,
       animation: false,
       legend: {
         display: false
@@ -46,9 +35,6 @@ class Chart extends Component {
           pointBackgroundColor: "red",
           pointStyle: 'circle'
         }
-        // line: {
-          // tension: 2
-        // }
       },
       scales: {
         xAxes: [{
@@ -69,7 +55,7 @@ class Chart extends Component {
           },
           ticks: {
             fontColor: 'white',
-            maxTicksLimit: 6
+            maxTicksLimit: 4
           }
         }]
       } 

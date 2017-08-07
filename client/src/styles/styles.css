@@ -6,6 +6,7 @@
  * 2. Prevent adjustments of font size after orientation changes in
  *    IE on Windows Phone and in iOS.
  */
+@import url("https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,300,400,500,700");
 html {
   line-height: 1.15;
   /* 1 */
@@ -389,14 +390,67 @@ template {
 [hidden] {
   display: none; }
 
+.container {
+  overflow: hidden;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: auto;
+  margin-right: auto; }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1200px; } }
+
+.form {
+  max-width: 100%; }
+
+.currencyCard {
+  max-width: 100%;
+  overflow: hidden;
+  margin: 10px 0; }
+
+@media (min-width: 1200px) {
+  .currencyCard {
+    max-width: 50%; } }
+
+.currencyCard__header {
+  font-size: 1.3rem;
+  padding: 0px 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  position: relative;
+  font-weight: 300;
+  user-select: none; }
+
+.currencyCard__header > p {
+  display: inline-block; }
+
+.currencyCard__header__currency {
+  font-weight: 100; }
+
+.currencyCard__header__code {
+  position: absolute;
+  right: 140px; }
+
+.currencyCard__header__rate {
+  position: absolute;
+  right: 50px; }
+
+.currencyCard__header__rate span {
+  color: #c33764;
+  font-weight: 500; }
+
+.currencyCard__header__delete {
+  position: absolute;
+  right: 10px;
+  cursor: pointer; }
+
+.currencyCard__chart {
+  padding: 5px; }
+
+.currencyCard__chart canvas {
+  padding-top: 20px; }
+
 body {
   color: #fff;
-  background-color: #DBDAC7;
-  background-color: #06111C; }
-
-canvas {
-  background-color: #309187;
   background-color: #06111C;
-  padding: 20px 15px 0 15px;
-  max-width: 500px;
-  max-height: 400px; }
+  font-family: 'Saira Extra Condensed', sans-serif; }
