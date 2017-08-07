@@ -15,7 +15,8 @@ class App extends Component {
       code: '',
       data: null,
       error: '',
-      displayChart: 'month' 
+      displayChart: 'month',
+      loading: false 
     };
   }
 
@@ -27,7 +28,8 @@ class App extends Component {
     });
     socket.on('currData', rates => {
       this.setState({
-        data: rates
+        data: rates,
+        loading: false
       });
     });
     socket.on('errorMessage', error => this.setState({ error }));
@@ -42,6 +44,7 @@ class App extends Component {
       return;
     } else {
       this.socket.emit('addCurr', code.toUpperCase());
+      this.setState({ loading: true });
     }
   }
 
@@ -79,7 +82,7 @@ class App extends Component {
                   let monthData = data.slice(-21); // a to przenieśc do chart
                   return (
                     <div key={i}>
-                      <li>{code} {currency} {Number(rates[rates.length - 1].mid).toFixed(2)}PLN {rates[rates.length - 1].effectiveDate} <span onClick={() => this.deleteCode(code)}>&#x2717;</span></li>
+                      <li>{code} {currency} {Number(rates[rates.length - 1].mid).toFixed(4)}PLN {rates[rates.length - 1].effectiveDate} <span onClick={() => this.deleteCode(code)}>&#x2717;</span></li>
                         <div onClick={() => this.setState({ displayChart: 'month' })}>1M</div>
                         <div onClick={() => this.setState({ displayChart: 'year' })}>1R</div>
                         <Chart code={code} labels={this.state.displayChart === 'month' ? monthLabels : labels} data={this.state.displayChart === 'month' ? monthData : data} points={this.state.displayChart === 'month'} /> 
@@ -87,6 +90,10 @@ class App extends Component {
                   )
                 })
               )
+            : <div></div>
+          } {
+            this.state.loading 
+            ? <div>Loading...</div>
             : <div></div>
           }
         </ol>  

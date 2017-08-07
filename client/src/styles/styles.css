@@ -390,10 +390,13 @@ template {
   display: none; }
 
 body {
-  color: #333; }
+  color: #fff;
+  background-color: #DBDAC7;
+  background-color: #06111C; }
 
 canvas {
   background-color: #309187;
+  background-color: #06111C;
   padding: 20px 15px 0 15px;
   max-width: 500px;
   max-height: 400px; }

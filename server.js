@@ -49,7 +49,8 @@ io.on('connection', socket => {
 
 const getRatesData = async (socket, code) => {
   try {
-    const url = getURL(code);
+    const url = getURL(code.toUpperCase());
+    console.log('url', url);
     const rates = await axios.get(url);
     initialData[code] = (rates.data);
     io.emit('currData', initialData);
