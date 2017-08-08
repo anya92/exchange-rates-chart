@@ -5,10 +5,11 @@ $mainBlue: #1d2671;
 
 @import 'partials/mixins';
 @import 'partials/container';
+@import 'partials/header';
+@import 'partials/modal';
+@import 'partials/loading';
 @import 'partials/form';
 @import 'partials/currencyCard';
-@import 'partials/loading';
-@import 'partials/modal';
 
 
 body {
