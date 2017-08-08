@@ -1,6 +1,7 @@
 .loading {
   position: relative;
   min-height: 300px;
+
    @include tablet {
     width: calc((100% - 60px) / 2);
     float: left;
@@ -17,7 +18,6 @@
     top: calc(50% - 30px);
     left: calc(50% - 30px);
     border: 4px solid $mainPink;
-    // background-color: $mainPink;
     border-radius: 50%;
     &:after {
       content: '';
@@ -31,19 +31,17 @@
       border: 4px solid transparent;
       border-top-color: white;
       border-bottom-color: white;
-      animation: spin 1s infinite ease;
+      animation: spin 1s infinite ease-in;
     }
   }
 }
 
 @keyframes spin {
-   0% {
+  0% {
     transform: rotate(0deg) scale(1);
-    
-   }
+  }
   50% {
-
-    transform: rotate(45deg) scale(1.2);
+    transform: rotate(90deg) scale(1.2);
   }
   100% {
     transform: rotate(360deg) scale(1);

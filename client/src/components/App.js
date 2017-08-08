@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { render } from 'react-dom';
 import socketIoClient from 'socket.io-client';
 import moment from 'moment';
 
 import SingleCurr from './SingleCurr';
+const searchIcon = require('../icons/search.svg');
 
 require('moment/locale/pl');
 moment.locale('pl');
@@ -15,22 +17,27 @@ class App extends Component {
       code: '',
       data: null,
       error: '',
-      displayChart: 'month',
-      loading: true 
+      loading: false 
     };
   }
 
+  componentWillMount() {
+    
+  }
+
   componentDidMount() {
-    // eslint-disable-next-line
     const socket = this.socket = socketIoClient();
     socket.on('initialData', data => {
       this.setState({ data });
+
     });
     socket.on('currData', rates => {
       this.setState({
         data: rates,
         loading: false
       });
+      document.querySelector('.modal').classList.remove('visible');
+      window.scrollTo(0, document.body.scrollHeight);
     });
     socket.on('errorMessage', error => this.setState({ error }));
   }
@@ -47,6 +54,7 @@ class App extends Component {
       this.setState({ loading: true });
     }
     this.input.value = '';
+
   }
 
   deleteCode = code => {
@@ -54,20 +62,42 @@ class App extends Component {
     this.socket.emit('deleteCode', code);
   }
 
+  openModal = () => {
+    document.querySelector('.modal').classList.add('visible');
+  }
+
+  closeModal = () => {
+    document.querySelector('.modal').classList.remove('visible');
+  }
+
   render() {
+    
     return (
       <div className="container">
         <div className="title">
           <h1>Kursy walut</h1>
         </div>
-        <div className="form">
-          <form onSubmit={e => this.addCode(e)}>
-            <label htmlFor="code">Kod waluty (np. USD, CHF)</label><br/>
-            <input type="text" onChange={e => this.setState({ code: e.target.value })} name="code" style={{textTransform: "uppercase"}} ref={ref => (this.input = ref)} />
-            <button type="submit">Dodaj</button>
-          </form>
+        <div className="search">
+          <img src={searchIcon} alt="search" onClick={() => this.openModal()} />
         </div>
-        
+        <div className="modal">
+          {
+            this.state.loading
+            ? <div className="loading__spinner"></div>
+            : (
+                <form className="form" onSubmit={e => this.addCode(e)}>
+                  <p className="form__close" onClick={() => this.closeModal()}>&#10005;</p>
+                  <div className="form__content">
+                    <label htmlFor="code" className="form__content__label">Kod waluty (np. USD, CHF)</label><br/>
+                    <input type="text" onChange={e => this.setState({ code: e.target.value })} name="code" style={{textTransform: "uppercase"}} ref={ref => (this.input = ref)} className="form__content__input" autoFocus />
+                    <button type="submit" className="form__content__button"><img src={searchIcon} alt="search"/></button>
+
+                  </div>
+                </form>
+
+              )
+          } 
+        </div>
         {
           this.state.error
         }
@@ -97,14 +127,8 @@ class App extends Component {
                   // )
                 })
               )
-            : <div></div>
-          } {
-            this.state.loading 
-            ? <div className="loading">
-                <div className="loading__spinner"></div>
-              </div>
-            : <div></div>
-          }
+            : <div className="loading__spinner"></div>
+          } 
       </div>
     );
   }
