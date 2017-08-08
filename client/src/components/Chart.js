@@ -18,7 +18,7 @@ class Chart extends Component {
             fill: false,
             backgroundColor: gradient,
             borderColor: gradient,
-            borderWidth: 3
+            borderWidth: 2
           }
         ]
       };

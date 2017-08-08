@@ -397,7 +397,7 @@ template {
   margin-left: auto;
   margin-right: auto; }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
   .container {
     max-width: 1200px; } }
 
@@ -407,11 +407,19 @@ template {
 .currencyCard {
   max-width: 100%;
   overflow: hidden;
-  margin: 10px 0; }
+  margin: 10px 0;
+  border: 0.5px solid rgba(255, 255, 255, 0.1); }
 
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
   .currencyCard {
-    max-width: 50%; } }
+    width: calc((100% - 60px) / 2);
+    float: left;
+    margin: 10px; } }
+
+@media (min-width: 992px) {
+  .currencyCard {
+    width: calc((100% - 60px) / 3);
+    float: left; } }
 
 .currencyCard__header {
   font-size: 1.3rem;
@@ -471,7 +479,57 @@ template {
   content: '|';
   margin: 5px; }
 
+.currencyCard__chart canvas:hover {
+  width: 100vw; }
+
+.loading {
+  position: relative;
+  min-height: 300px; }
+
+@media (min-width: 768px) {
+  .loading {
+    width: calc((100% - 60px) / 2);
+    float: left; } }
+
+@media (min-width: 992px) {
+  .loading {
+    width: calc((100% - 60px) / 3); } }
+
+.loading__spinner {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 4px solid #c33764;
+  border-radius: 50%; }
+
+.loading__spinner:after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  border: 4px solid transparent;
+  border-top-color: white;
+  border-bottom-color: white;
+  animation: spin 1s infinite ease; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg) scale(1); }
+  50% {
+    transform: rotate(45deg) scale(1.2); }
+  100% {
+    transform: rotate(360deg) scale(1); } }
+
 body {
   color: #fff;
-  background-color: #06111C;
+  background-color: #06111d;
   font-family: 'Saira Extra Condensed', sans-serif; }
+
+* {
+  box-sizing: border-box; }

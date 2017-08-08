@@ -3,7 +3,6 @@ import socketIoClient from 'socket.io-client';
 import moment from 'moment';
 
 import SingleCurr from './SingleCurr';
-import Chart from './Chart';
 
 require('moment/locale/pl');
 moment.locale('pl');
@@ -17,7 +16,7 @@ class App extends Component {
       data: null,
       error: '',
       displayChart: 'month',
-      loading: false 
+      loading: true 
     };
   }
 
@@ -47,6 +46,7 @@ class App extends Component {
       this.socket.emit('addCurr', code.toUpperCase());
       this.setState({ loading: true });
     }
+    this.input.value = '';
   }
 
   deleteCode = code => {
@@ -63,7 +63,7 @@ class App extends Component {
         <div className="form">
           <form onSubmit={e => this.addCode(e)}>
             <label htmlFor="code">Kod waluty (np. USD, CHF)</label><br/>
-            <input type="text" onChange={e => this.setState({ code: e.target.value })} name="code" style={{textTransform: "uppercase"}}  />
+            <input type="text" onChange={e => this.setState({ code: e.target.value })} name="code" style={{textTransform: "uppercase"}} ref={ref => (this.input = ref)} />
             <button type="submit">Dodaj</button>
           </form>
         </div>
@@ -100,7 +100,9 @@ class App extends Component {
             : <div></div>
           } {
             this.state.loading 
-            ? <div>Loading...</div>
+            ? <div className="loading">
+                <div className="loading__spinner"></div>
+              </div>
             : <div></div>
           }
       </div>

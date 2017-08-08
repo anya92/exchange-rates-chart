@@ -2,9 +2,18 @@
   max-width: 100%;
   overflow: hidden;
   margin: 10px 0;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  // padding: 10px;
+
+  @include tablet {
+    width: calc((100% - 60px) / 2);
+    float: left;
+    margin: 10px;
+  }
 
   @include desktop {
-    max-width: 50%;
+    width: calc((100% - 60px) / 3);
+    float: left;
   }
 
   &__header {
@@ -70,8 +79,9 @@
         }
       }
     }
-    canvas {
+    canvas:hover {
       // padding-top: 20px;
+      width: 100vw;
     }
   }  
 }

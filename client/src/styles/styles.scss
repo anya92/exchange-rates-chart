@@ -7,10 +7,15 @@ $mainBlue: #1d2671;
 @import 'partials/container';
 @import 'partials/form';
 @import 'partials/currencyCard';
+@import 'partials/loading';
 
 
 body {
   color: #fff;
-  background-color: #06111C;
+  background-color: #06111d;
   font-family: 'Saira Extra Condensed', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
