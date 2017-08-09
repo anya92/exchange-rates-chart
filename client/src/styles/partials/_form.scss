@@ -1,13 +1,7 @@
 .form {
   width: 100%;
   position: relative;
-  height: 300px;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
-  // align-content: center;
-  // height: 100vh;
+  height: 80%;
 
   &__close {
     position: absolute;
@@ -15,6 +9,10 @@
     right: 10px;
     font-size: 2rem;
     cursor: pointer;
+
+    @include tablet {
+      right: 30px;
+    }
   }
 
   &__content {
@@ -23,7 +21,14 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    // background-color: mistyrose;
+    
+    @include tablet {
+      width: 70%;
+    }
+    
+    @include desktop {
+      width: 50%;
+    }
 
     &__label {
       font-size: 1.6rem;
@@ -37,8 +42,9 @@
       border-bottom: 2px solid #fff;
       color: #fff;
       font-size: 2rem;
+      text-transform: uppercase;
       &:focus {
-        border-bottom: 3px solid $mainPink;
+        border-bottom: 3px solid $mainColor;
         outline: none;
       }
     }

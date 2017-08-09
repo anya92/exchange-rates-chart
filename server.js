@@ -3,8 +3,7 @@ const http = require('http');
 const path = require('path');
 const socketIo = require('socket.io');
 const axios = require('axios');
-// const CronJob = require('cron').CronJob;
-const getURL = require('./api');
+const getURL = require('./helpers');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -36,23 +35,23 @@ const getDataEveryDay = async (code) => {
 
 io.on('connection', socket => {
   io.emit('initialData', initialData);
-  socket.on('addCurr', code => {
+  socket.on('add', code => {
     getRatesData(socket, code);
   });
-  socket.on('deleteCode', code => {
+  socket.on('delete', code => {
     delete initialData[code];
-    console.log(initialData[code]);
-    io.emit('initialData', initialData);
+    socket.broadcast.emit('afterDelete', code);
   })
 });
 
 const getRatesData = async (socket, code) => {
   try {
     const url = getURL(code.toUpperCase());
-    console.log('url', url);
     const rates = await axios.get(url);
-    initialData[code] = (rates.data);
-    io.emit('currData', initialData);
+    initialData[code] = rates.data;
+    let data = {};
+    data[code] = rates.data;
+    io.emit('afterAdd', data);
   } catch (error) {
     console.log('error', error.response.statusText);
     socket.emit('errorMessage', error.response.statusText);
@@ -62,12 +61,6 @@ const getRatesData = async (socket, code) => {
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build/index.html'));
 });
-
-// new CronJob('00 11 13 * * *', function() {
-//   // Runs every day at 9:00:00
-//   console.log('Get new data at 9:00');
-//   getDataEveryDay('EUR');
-// }, null, true, 'Europe/Warsaw');
 
 
 server.listen(port, () => {

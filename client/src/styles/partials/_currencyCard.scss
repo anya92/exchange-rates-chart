@@ -1,9 +1,8 @@
 .currencyCard {
   max-width: 100%;
-  // overflow: hidden;
+  overflow: hidden;
   margin: 10px 0;
-  border: 0.5px solid rgba(255, 255, 255, 0.1);
-  // padding: 10px;
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
 
   @include tablet {
     width: calc((100% - 60px) / 2);
@@ -11,15 +10,10 @@
     margin: 10px;
   }
 
-  // @include desktop {
-  //   width: calc((100% - 60px) / 3);
-  //   float: left;
-  // }
-
   &__header {
     font-size: 1.3rem;
     padding: 0px 10px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.3);
     position: relative;
     font-weight: 300;
     user-select: none;
@@ -40,7 +34,7 @@
       position: absolute;
       right: 50px;
       span {
-        color: $mainPink;
+        color: $mainColor;
         font-weight: 500;
       }
     }
@@ -52,14 +46,14 @@
   }
 
   &__chart {
-    padding: 0 10px;
+    padding: 0 10px 10px 10px;
 
     &__date {
       font-size: 1.2rem;
-      color: lighten($mainBlue, 20%);
+      color: $mainColor;
       display: inline-block;
-
     }
+
     &__choose {
       float: right;
       text-align: right;
@@ -69,10 +63,13 @@
         opacity: 0.5;
         font-size: 1.2rem;
         margin-left: 5px;
-
         cursor: pointer;
+
         &.active {
           opacity: 1;
+          &::after {
+            opacity: 0.5;
+          }
         }
         &:not(:last-child):after{
           content: '|';

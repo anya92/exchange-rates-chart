@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import Chart from './Chart';
 
-require('moment/locale/pl');
-moment.locale('pl');
-
 class SingleCurr extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +18,7 @@ class SingleCurr extends Component {
   }
 
   render() {
-    const { currency, code, rates, deleteCode } = this.props;
+    const { currency, code, rates, deleteCurrency } = this.props;
     const lastRate = rates[rates.length - 1].mid;
     const date = rates[rates.length - 1].effectiveDate;
     let labels = [], data = [];
@@ -36,7 +33,7 @@ class SingleCurr extends Component {
           <p className="currencyCard__header__currency">{currency}</p>
           <p className="currencyCard__header__code">1 {code}</p>
           <p className="currencyCard__header__rate"><span>{Number(lastRate).toFixed(4)}</span> PLN</p>
-          <p className="currencyCard__header__delete" onClick={() => deleteCode(code)}>&#10005;</p>
+          <p className="currencyCard__header__delete" onClick={() => deleteCurrency(code)}>&#10005;</p>
         </div>
         <div className="currencyCard__chart">
         <div className="currencyCard__chart__date">

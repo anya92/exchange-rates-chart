@@ -17,7 +17,6 @@
     "socket.io": "^2.0.3"
   },
   "devDependencies": {
-    "cron": "^1.2.1",
     "nodemon": "^1.11.0"
   }
 }

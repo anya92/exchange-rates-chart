@@ -1,7 +1,9 @@
 @import '../../node_modules/normalize.css/normalize';
 @import url('https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,300,400,500,700');
-$mainPink: #c33764;
-$mainBlue: #1d2671;
+
+$backgroundColor: #1D2731;
+$mainColor: #D9B310;
+$secondColor: #0B3C5D;
 
 @import 'partials/mixins';
 @import 'partials/container';
@@ -10,12 +12,12 @@ $mainBlue: #1d2671;
 @import 'partials/loading';
 @import 'partials/form';
 @import 'partials/currencyCard';
-@import 'partials/footer';
+@import 'partials/footer'; 
 
 
 body {
   color: #fff;
-  background-color: #06111d;
+  background-color: $backgroundColor;
   font-family: 'Saira Extra Condensed', sans-serif;
 }
 
