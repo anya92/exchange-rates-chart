@@ -23,7 +23,11 @@ class App extends Component {
   componentWillMount() {
     window.addEventListener('keydown', e => {
       if (e.keyCode === 27) { // ESC
-        document.querySelector('.modal').classList.remove('visible');
+        this.closeModal();
+      }
+      if (e.keyCode === 70 && e.ctrlKey) {
+        e.preventDefault();
+        this.openModal();
       }
     });
   }
@@ -56,7 +60,10 @@ class App extends Component {
     const { code, data } = this.state;
     if (code === '') return;
     if (code.toUpperCase() in data) {
-      console.log('data is already in state');
+      // data is already in state
+      document.querySelector('.modal').classList.remove('visible');
+      document.getElementById(code.toUpperCase()).scrollIntoView(false, {block: "start", behavior: "smooth"});
+      this.input.value = '';
       return;
     } else {
       this.socket.emit('addCurr', code.toUpperCase());
@@ -71,6 +78,10 @@ class App extends Component {
 
   openModal = () => {
     document.querySelector('.modal').classList.add('visible');
+    setTimeout(() => {
+      this.input.focus();
+      
+    }, 100);
   }
 
   closeModal = () => {
@@ -118,6 +129,9 @@ class App extends Component {
                 )
               : <div className="loading__spinner"></div>
             } 
+        </div>
+        <div className="footer">
+          <p className="footer__text">&#10092; &#10093; with <span className="footer__heart">&#10084;</span> by <a href="https://github.com/anya92" target="_black">anya92</a></p>
         </div>
       </div>
     );

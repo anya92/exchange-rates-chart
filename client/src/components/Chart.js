@@ -66,7 +66,8 @@ class Chart extends Component {
           ticks: {
             fontColor: 'white',
             fontFamily: 'Saira Extra Condensed',
-            maxTicksLimit: 10,
+            fontSize: 14,
+            maxTicksLimit: 12,
             // stepSize: 0.5
           }
         }],

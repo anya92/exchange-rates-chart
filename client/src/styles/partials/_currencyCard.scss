@@ -11,10 +11,10 @@
     margin: 10px;
   }
 
-  @include desktop {
-    width: calc((100% - 60px) / 3);
-    float: left;
-  }
+  // @include desktop {
+  //   width: calc((100% - 60px) / 3);
+  //   float: left;
+  // }
 
   &__header {
     font-size: 1.3rem;
@@ -52,7 +52,7 @@
   }
 
   &__chart {
-    padding: 10px;
+    padding: 0 10px;
 
     &__date {
       font-size: 1.2rem;

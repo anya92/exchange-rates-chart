@@ -1,0 +1,14 @@
+.footer {
+  text-align: center;
+  width: 100%;
+  &__heart {
+    color: crimson;
+  }
+  &__text {
+    font-size: 1.2rem;
+    a {
+      color: white;
+      text-decoration-color: #fff;
+    }
+  }
+}
