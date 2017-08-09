@@ -52,7 +52,7 @@
   }
 
   &__chart {
-    padding: 5px;
+    padding: 10px;
 
     &__date {
       font-size: 1.2rem;
@@ -69,6 +69,7 @@
         opacity: 0.5;
         font-size: 1.2rem;
         margin-left: 5px;
+
         cursor: pointer;
         &.active {
           opacity: 1;
@@ -78,10 +79,6 @@
           margin: 5px;
         }
       }
-    }
-    canvas:hover {
-      // padding-top: 20px;
-      width: 100vw;
     }
   }  
 }

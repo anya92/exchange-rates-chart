@@ -28,7 +28,6 @@ const getDataEveryDay = async (code) => {
     const rates = await axios.get(url);
     initialData = {};
     initialData[code] = rates.data;
-    initialData[code].id = Math.round(Math.random() * 1000);
     io.emit('currData', initialData);
   } catch (error) {
     console.log(error);

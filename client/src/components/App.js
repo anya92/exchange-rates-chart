@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import socketIoClient from 'socket.io-client';
 import moment from 'moment';
 

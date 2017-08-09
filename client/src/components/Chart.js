@@ -1,20 +1,40 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
+import moment from 'moment';
 
+require('moment/locale/pl');
+moment.locale('pl');
 
 class Chart extends Component {
   render() {
-    const { labels, code, data } = this.props;
+    const { labels, code, data, display } = this.props;
+    let monthData = data.slice(- (data.length / 12)),
+      sixMonthsData = data.slice(- (data.length / 2)),
+      yearData = data;
+    let monthLabels = labels.slice(- (data.length / 12)).map(date => moment(date).format('DD MMM')),
+      sixMonthsLabels = labels.slice(- (data.length / 2)).map(date => moment(date).format('DD MMM')) ,
+      yearLabels = labels.map(date => moment(date).format('MMM \'YY'));
+    let displayData = {
+      'month': monthData,
+      'six-months': sixMonthsData,
+      'year': yearData
+    };
+    let displayLabels = {
+      'month': monthLabels,
+      'six-months': sixMonthsLabels,
+      'year': yearLabels
+    };
+
     const ratesData = (canvas) => {
       const gradient = canvas.getContext('2d').createLinearGradient(500, 0, 100, 0);
       gradient.addColorStop(0, "#c33764");
       gradient.addColorStop(1, "#1d2671");
       return {
-        labels,
+        labels: displayLabels[display],
         datasets: [
           {
             label: code,
-            data,
+            data: displayData[display],
             fill: false,
             backgroundColor: gradient,
             borderColor: gradient,
@@ -67,9 +87,6 @@ class Chart extends Component {
     return (
       <div>
         <Line data={ratesData} options={options} id="line-chart" />
-        {
-           
-        }
       </div>
     );
   }

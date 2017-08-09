@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-
 import Chart from './Chart';
 
 require('moment/locale/pl');
 moment.locale('pl');
-
 
 class SingleCurr extends Component {
   constructor(props) {
@@ -15,13 +13,20 @@ class SingleCurr extends Component {
       displayChart: 'month' // six-months, year
     }
   }
+
+  changeChart = (displayChart) => {
+    this.setState({ displayChart });
+    document.querySelectorAll('.chooseDisplay').forEach(p => p.classList.remove('active'));
+    document.querySelector(`.${displayChart}`).classList.add('active');
+  }
+
   render() {
     const { currency, code, rates, deleteCode } = this.props;
     const lastRate = rates[rates.length - 1].mid;
     const date = rates[rates.length - 1].effectiveDate;
     let labels = [], data = [];
     rates.forEach(rate => {
-      labels.push(moment(rate.effectiveDate).format('DD MMM'));
+      labels.push(rate.effectiveDate);
       data.push(rate.mid);
     });
 
@@ -38,11 +43,11 @@ class SingleCurr extends Component {
           <p>{moment(date).format('DD-MM-YYYY')}</p>
         </div>
           <div className="currencyCard__chart__choose">
-            <p>miesiąc</p>
-            <p>pół roku</p>
-            <p className="active">rok</p>
+            <p onClick={() => this.changeChart('month')} className="chooseDisplay month">miesiąc</p>
+            <p onClick={() => this.changeChart('six-months')} className="chooseDisplay six-months">pół roku</p>
+            <p onClick={() => this.changeChart('year')} className="chooseDisplay year active">rok</p>
           </div>
-          <Chart code={code} labels={labels} data={data} />
+          <Chart code={code} labels={labels} data={data} display={this.state.displayChart} />
         </div>
       </div>
     );

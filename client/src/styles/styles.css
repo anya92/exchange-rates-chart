@@ -576,7 +576,7 @@ template {
   cursor: pointer; }
 
 .currencyCard__chart {
-  padding: 5px; }
+  padding: 10px; }
 
 .currencyCard__chart__date {
   font-size: 1.2rem;
@@ -601,9 +601,6 @@ template {
 .currencyCard__chart__choose p:not(:last-child):after {
   content: '|';
   margin: 5px; }
-
-.currencyCard__chart canvas:hover {
-  width: 100vw; }
 
 body {
   color: #fff;
