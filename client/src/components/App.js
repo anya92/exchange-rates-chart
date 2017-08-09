@@ -55,7 +55,7 @@ class App extends Component {
     e.preventDefault();
     const { code, data } = this.state;
     if (code === '') return;
-    if (code in data) {
+    if (code.toUpperCase() in data) {
       console.log('data is already in state');
       return;
     } else {

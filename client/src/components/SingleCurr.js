@@ -16,8 +16,8 @@ class SingleCurr extends Component {
 
   changeChart = (displayChart) => {
     this.setState({ displayChart });
-    document.querySelectorAll('.chooseDisplay').forEach(p => p.classList.remove('active'));
-    document.querySelector(`.${displayChart}`).classList.add('active');
+    [...this.choose.children].forEach(p => p.classList.remove('active'));
+    this.choose.querySelector(`.${displayChart}`).classList.add('active');
   }
 
   render() {
@@ -42,10 +42,10 @@ class SingleCurr extends Component {
         <div className="currencyCard__chart__date">
           <p>{moment(date).format('DD-MM-YYYY')}</p>
         </div>
-          <div className="currencyCard__chart__choose">
-            <p onClick={() => this.changeChart('month')} className="chooseDisplay month">miesiąc</p>
+          <div className="currencyCard__chart__choose" ref={ref => (this.choose = ref)}>
+            <p onClick={() => this.changeChart('month')} className="chooseDisplay month active">miesiąc</p>
             <p onClick={() => this.changeChart('six-months')} className="chooseDisplay six-months">pół roku</p>
-            <p onClick={() => this.changeChart('year')} className="chooseDisplay year active">rok</p>
+            <p onClick={() => this.changeChart('year')} className="chooseDisplay year">rok</p>
           </div>
           <Chart code={code} labels={labels} data={data} display={this.state.displayChart} />
         </div>
