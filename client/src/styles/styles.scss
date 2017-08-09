@@ -11,11 +11,17 @@
 @import 'partials/currencyCard';
 @import 'partials/footer'; 
 
+html {
+  height: 100%;
+}
 
 body {
   color: #fff;
   background-color: $backgroundColor;
   font-family: 'Saira Extra Condensed', sans-serif;
+  position: relative;
+  min-height: 100%; 
+  padding-bottom: 2rem;
 }
 
 * {

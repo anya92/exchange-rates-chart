@@ -69,7 +69,7 @@ class App extends Component {
       this.input.value = '';
       return;
     } else {
-      this.socket.emit('add', code);
+      this.socket.emit('add', code.toUpperCase());
       this.setState({ loading: true });
     }
     this.input.value = '';
