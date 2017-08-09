@@ -15,7 +15,7 @@
     padding: 0px 10px;
     background-color: rgba(255, 255, 255, 0.3);
     position: relative;
-    font-weight: 300;
+    font-family: 'Saira Extra Condensed Bold';
     user-select: none;
 
     & > p {
@@ -23,7 +23,7 @@
     }
 
     &__currency {
-      font-weight: 100;
+      font-family: 'Saira Extra Condensed Thin';
     }
 
     &__code {
@@ -35,7 +35,7 @@
       right: 50px;
       span {
         color: $mainColor;
-        font-weight: 500;
+        font-family: 'Saira Extra Condensed Bold';
       }
     }
     &__delete {

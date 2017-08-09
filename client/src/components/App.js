@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import socketIoClient from 'socket.io-client';
 
 import SingleCurr from './SingleCurr';
-const searchIcon = require('../icons/search.svg');
+const searchIcon = require('../assets/icons/search.svg');
 
 class App extends Component {
   constructor() {
@@ -65,11 +65,11 @@ class App extends Component {
     if (code.toUpperCase() in data) {
       // data is already in state
       this.closeModal();
-      document.getElementById(code.toUpperCase()).scrollIntoView(false);
+      // document.getElementById(code.toUpperCase()).scrollIntoView(false);
       this.input.value = '';
       return;
     } else {
-      this.socket.emit('add', code.toUpperCase());
+      this.socket.emit('add', code);
       this.setState({ loading: true });
     }
     this.input.value = '';
@@ -125,7 +125,6 @@ class App extends Component {
                       <button type="submit" className="form__content__button"><img src={searchIcon} alt="search"/></button>
                     </div>
                   </form>
-
                 )
             } 
           </div>

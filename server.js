@@ -21,18 +21,6 @@ io.on('connection', socket => {
 
 let initialData = {};
 
-const getDataEveryDay = async (code) => {
-  try {
-    const url = getURL(code);
-    const rates = await axios.get(url);
-    initialData = {};
-    initialData[code] = rates.data;
-    io.emit('currData', initialData);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 io.on('connection', socket => {
   io.emit('initialData', initialData);
   socket.on('add', code => {
@@ -58,6 +46,18 @@ const getRatesData = async (socket, code) => {
   }
 }
 
+const getInitialData = async (code) => {
+  try {
+    const url = getURL(code);
+    const rates = await axios.get(url);
+    initialData = {};
+    initialData[code] = rates.data;
+    io.emit('initialData', initialData);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build/index.html'));
 });
@@ -65,6 +65,6 @@ app.get('*', (req, res) => {
 
 server.listen(port, () => {
   console.log(`Server listening on ${port}`);
-  getDataEveryDay('EUR');
+  getInitialData('EUR');
   io.emit('initialData', initialData);
 });
