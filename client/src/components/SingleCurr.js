@@ -31,7 +31,7 @@ class SingleCurr extends Component {
     });
 
     return (
-      <div className="currencyCard">
+      <div className="currencyCard" id={code}>
         <div className="currencyCard__header">
           <p className="currencyCard__header__currency">{currency}</p>
           <p className="currencyCard__header__code">1 {code}</p>

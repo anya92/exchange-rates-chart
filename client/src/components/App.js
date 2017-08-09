@@ -35,14 +35,20 @@ class App extends Component {
 
     });
     socket.on('currData', rates => {
+      const { code } = this.state;
       this.setState({
         data: rates,
         loading: false
       });
       document.querySelector('.modal').classList.remove('visible');
-      // window.scrollTo(0, document.body.scrollHeight);
+      document.getElementById(code.toUpperCase()).scrollIntoView();
     });
-    socket.on('errorMessage', error => this.setState({ error }));
+    socket.on('errorMessage', error => {
+      this.setState({ error });
+      setTimeout(() => {
+        this.setState({ loading: false, error: '' });
+      }, 1000);
+    });
   }
 
   addCode = e => {
@@ -57,11 +63,9 @@ class App extends Component {
       this.setState({ loading: true });
     }
     this.input.value = '';
-
   }
 
   deleteCode = code => {
-    console.log('delete', code);
     this.socket.emit('deleteCode', code);
   }
 
@@ -85,7 +89,10 @@ class App extends Component {
           <div className="modal">
             {
               this.state.loading
-              ? <div className="loading__spinner"></div>
+              ? <div>
+                  <div className="loading__spinner"></div>
+                  <p className="modal__error">{ this.state.error }</p>
+                </div>
               : (
                   <form className="form" onSubmit={e => this.addCode(e)}>
                     <p className="form__close" onClick={() => this.closeModal()}>&#10005;</p>
@@ -93,45 +100,24 @@ class App extends Component {
                       <label htmlFor="code" className="form__content__label">Kod waluty (np. USD, CHF)</label><br/>
                       <input type="text" onChange={e => this.setState({ code: e.target.value })} name="code" style={{textTransform: "uppercase"}} ref={ref => (this.input = ref)} className="form__content__input" autoFocus />
                       <button type="submit" className="form__content__button"><img src={searchIcon} alt="search"/></button>
-
                     </div>
                   </form>
 
                 )
             } 
           </div>
-          {
-            this.state.error
-          }
             {
               this.state.data
               ? (
                   Object.keys(this.state.data).map((el, i) => {
                     let { code, currency, rates } = this.state.data[el];
-                    
                     return (
                       <SingleCurr key={i} currency={currency} code={code} rates={rates} deleteCode={this.deleteCode}/>
                     )
-                    // rates.forEach(rate => {
-                    //   labels.push(moment(rate.effectiveDate).format('DD MMM'));
-                    //   data.push(rate.mid);
-                    // });
-                    // let monthLabels = labels.slice(-(labels.length / 12)); // dwa rodzaje wykresów: rok / miesiąc
-                    // let monthData = data.slice(-(data.length / 12)); // a to przenieśc do chart
-                    // console.log(-(labels.length / 12));
-                    // return (
-                    //   <div key={i}>
-                    //     <li>{code} {currency} {Number(rates[rates.length - 1].mid).toFixed(4)}PLN {rates[rates.length - 1].effectiveDate} <span onClick={() => this.deleteCode(code)}>&#x2717;</span></li>
-                    //       <div onClick={() => this.setState({ displayChart: 'month' })}>1M</div>
-                    //       <div onClick={() => this.setState({ displayChart: 'year' })}>1R</div>
-                    //       <Chart code={code} labels={this.state.displayChart === 'month' ? monthLabels : labels} data={this.state.displayChart === 'month' ? monthData : data} points={this.state.displayChart === 'month'} /> 
-                    //   </div>  
-                    // )
-                  })
+                  })  
                 )
               : <div className="loading__spinner"></div>
             } 
-
         </div>
       </div>
     );

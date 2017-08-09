@@ -79,7 +79,8 @@ class Chart extends Component {
             fontColor: 'white',
             fontFamily: 'Saira Extra Condensed',
             fontSize: 14,
-            maxTicksLimit: 4
+            maxTicksLimit: 4,
+            padding: 10
           }
         }]
       } 
