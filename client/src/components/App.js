@@ -131,7 +131,7 @@ class App extends Component {
             {
               this.state.data
               ? (
-                  Object.keys(this.state.data).map((el, i) => {
+                  Object.keys(this.state.data).reverse().map((el, i) => {
                     let { code, currency, rates } = this.state.data[el];
                     return (
                       <SingleCurr key={i} currency={currency} code={code} rates={rates} deleteCurrency={this.deleteCurrency}/>
